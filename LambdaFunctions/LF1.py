@@ -224,7 +224,7 @@ def handle_thankyou_intent(event):
             "type": "ElicitIntent",
             'message': {
                 'contentType': 'PlainText',
-                'content': 'You are welcome!'}
+                'content': 'You are  welcome!'}
         }
     }
 
