@@ -84,7 +84,7 @@ def generate_suggestions(randomIds, cuisine, queue_message):
     dynamoDBResponses = []
     for id in randomIds:
         # get elastic search results for the random restaurant
-        url2 = 'https://search-restaurant-2xxoafusnhkyn4gmypsml2uzd4.us-east-1.es.amazonaws.com/restaurants/_search?from=' + str(id) + '&&size=1&&q=cuisine:' + cuisine
+        url2 = 'https://search-restaurants-jf5427ogqfw6fcrzag5miq4skq.us-east-1.es.amazonaws.com/restaurants/_search?from=' + str(id) + '&&size=1&&q=cuisine:' + cuisine
         random_elastic_response = requests.get(url2, auth = authent, headers={"Content-Type": "application/json"}).json()
         restaurantIds.append(random_elastic_response['hits']['hits'][0]['_source']['Business ID'])
     
@@ -135,7 +135,7 @@ def handle_queue_item():
             output, cache = generate_suggestions(randomIds, cuisine, js)
 
             # send the message
-            send_plain_email('hsgrandhi@gmail.com', [email], str(output))
+            send_plain_email('zp2090@nyu.edu', [email], str(output))
             
             # store the suggestions for next time
             table2response = table2.update_item(Key={'identity': '1'}, UpdateExpression="set isFirstTime=:r, suggestions=:p",ExpressionAttributeValues={':r': True,':p': cache},ReturnValues="UPDATED_NEW")
@@ -144,4 +144,3 @@ def handle_queue_item():
             client.delete_message(QueueUrl=queue_url, ReceiptHandle=message['ReceiptHandle'])
     else:
         print('Queue is empty')
-
