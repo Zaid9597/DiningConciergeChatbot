@@ -7,8 +7,8 @@ def lambda_handler(event, context):
     client = boto3.client('lex-runtime')
     
     response = client.post_text(
-        botAlias='DiningTwo',
-        botName='DiningBotTwo',
+        botAlias='DiningConcierge',
+        botName='DiningBot',
         userId='User0',
         inputText=message)
 
